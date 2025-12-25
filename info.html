@@ -8,9 +8,27 @@
             src: url(imgs/VCR_OSD_MONO_1.001.ttf); format:('ttf');
             font-weight: normal;
            }
+           
+           :root {
+               --bg-color: #000000;
+               --text-color: whitesmoke;
+               --link-color: #a0a0ff;
+               --border-color: #333333;
+           }
             body{
-                background-color: #000000
+                background-color: var(--bg-color);
+                transition: background-color 0.3s ease;
+                margin: 0;
+                padding: 20px;
+                min-height: 100vh;
             }
+
+            .theme-label {
+                font-family: 'VHS', monospace;
+                font-size: 12px;
+                color: var(--text-color);
+            }
+            
             img{
                 width: 100px;
                 text-align: center;
@@ -26,22 +44,71 @@
                 font-weight: lighter;
                 font-size: smaller;
                 text-align: center;
-                font-family: 'VHS';
-                color: whitesmoke
+                font-family: 'VHS', monospace;
+                color: var(--text-color);
+                
             } 
             h1{
                 text-align: center;
-                font-family: 'VHS';
-                color: whitesmoke
+                font-family: 'VHS', monospace;
+                color: var(--text-color);
+                margin-top: 20px;
+            }
+            
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+            }
+            
+            a:hover {
+                text-decoration: underline;
+            }
+            
+            .content-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                padding-top: 40px;
+            }
+            
+            .info {
+                font-weight: lighter;
+                font-size: 10px;
+                text-align: center;
+                font-family: 'VHS', monospace;
+                color: var(--text-color);
+            }
+            footer {
+                text-align: center;
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid var(--border-color);
+                font-family: 'VHS', monospace;
+                font-size: 12px;
+                color: var(--text-color);
+                opacity: 0.8;
+                transition: all 0.3s ease;
             }
         </style>
     </head>
     <body>
         <img src="imgs/logo.png" class="center-img">
+
+        <h1>Info</h1>
+        <p>At the end of everything, hold onto anything.</p>
+        <p class="info">I was born in a forgotten city where winter lasts three-quarters of the year. Alcohol is no escape from the cold; here, non-drinkers go crazy.</p>
+        <p class="info">Artist from Dudinka, Siberia.</p>
+        <p class="info">I make music, art, designs and fan book translations.</p>
+        <p class="info">18. he/him</p>
+
         <h1>Links</h1>
-        <p>Back to <a href="index.html">main page</a>.</p>
-        <p><a href="https://x.com/noisyfocks">Twitter</a>.</p>
+        <p class = "nav">Back to <a href="index.html">main page</a>.</p>
         <p>Full <a href="https://drive.google.com/drive/folders/1w-jGXK1Fuu6ghP87USxNWz2cS0EHPsCH?usp=drive_link">music</a> preview.</p>
+        <p><a href="https://x.com/noisyfocks">Twitter</a>.</p>
         <p><a href="https://www.twitch.tv/noisyfocks">Twitch</a>.</p>
+
+
     </body>
+    <footer>
+            <p>@noisyfocks. 2025</p>
+     </footer>
 </html>

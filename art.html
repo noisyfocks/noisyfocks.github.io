@@ -2,15 +2,28 @@
 <html>
     <head>
         <title>Noisyfocks's art</title>
-        <style>
+ <style>
            @font-face {
             font-family: 'VHS';
             src: url(imgs/VCR_OSD_MONO_1.001.ttf); format:('ttf');
             font-weight: normal;
            }
+           
+           :root {
+               --bg-color: #000000;
+               --text-color: whitesmoke;
+               --link-color: #a0a0ff;
+               --border-color: #333333;
+           }
+           
             body{
-                background-color: #000000
+                background-color: var(--bg-color);
+                transition: background-color 0.3s ease;
+                margin: 0;
+                padding: 20px;
+                min-height: 100vh;
             }
+            
             img{
                 width: 100px;
                 text-align: center;
@@ -26,24 +39,58 @@
                 font-weight: lighter;
                 font-size: smaller;
                 text-align: center;
-                font-family: 'VHS';
-                color: whitesmoke
+                font-family: 'VHS', monospace;
+                color: var(--text-color);
+                transition: color 0.3s ease;
             } 
             h1{
                 text-align: center;
-                font-family: 'VHS';
-                color: whitesmoke
+                font-family: 'VHS', monospace;
+                color: var(--text-color);
+                transition: color 0.3s ease;
+                margin-top: 20px;
             }
+            
+            footer {
+                text-align: center;
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid var(--border-color);
+                font-family: 'VHS', monospace;
+                font-size: 12px;
+                color: var(--text-color);
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+            
+            a:hover {
+                text-decoration: underline;
+            }
+            
+            .content-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                padding-top: 40px;
+            }
+            
         </style>
     </head>
     <body>
         <img src="imgs/logo.png" class="center-img">
         <h1>Art</h1>
-        <p>Back to <a href="index.html">main page</a>.</p>
+        <p class="nav">Back to <a href="index.html">main page</a>.</p>
         <p>Twitter <a href="https://x.com/noisyfocks">link</a>.</p>
-        <img src="imgs/pic1.png" class="center-img">
-        <img src="imgs/pic2.png" class="center-img">
+        <img src="imgs/pic1.png" alt="she is the painkiller..." class="center-img">
+        <img src="imgs/pic2.png" alt="it's helloween... tonight!"class="center-img">
         <img src="imgs/pic3.png" class="center-img">
         <img src="imgs/pic4.png" class="center-img">
     </body>
+    <footer>
+            <p>@noisyfocks. 2025</p>
+     </footer>
 </html>

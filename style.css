@@ -1,2 +1,17 @@
-body{background-color: black}
-hl{color: red; text-align: center;}
+:root{
+    --base-color: #000000;
+    --text-color: whitesmoke;
+
+}
+.lightmode{
+    --base-color: whitesmoke;
+    --text-color: #000000;
+}
+#theme-switch{
+    height: 10px;
+    width: 10px;
+    background-color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

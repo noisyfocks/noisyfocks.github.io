@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark/Light Theme Toggle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --light-bg: #f8f9fa;
+            --light-text: #212529;
+            --light-card: #ffffff;
+            --light-shadow: rgba(0, 0, 0, 0.1);
+            --light-accent: #4361ee;
+            
+            /* Dark theme variables */
+            --dark-bg: #121212;
+            --dark-text: #f8f9fa;
+            --dark-card: #1e1e1e;
+            --dark-shadow: rgba(0, 0, 0, 0.3);
+            --dark-accent: #4cc9f0;
+            
+            /* Default theme */
+            --bg-color: var(--light-bg);
+            --text-color: var(--light-text);
+            --card-color: var(--light-card);
+            --shadow-color: var(--light-shadow);
+            --accent-color: var(--light-accent);
+        }
+        
+        .dark-theme {
+            --bg-color: var(--dark-bg);
+            --text-color: var(--dark-text);
+            --card-color: var(--dark-card);
+            --shadow-color: var(--dark-shadow);
+            --accent-color: var(--dark-accent);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.4s ease, color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--accent-color), #7209b7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .theme-toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .theme-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .theme-toggle {
+            position: relative;
+            width: 70px;
+            height: 34px;
+        }
+        
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2d3047;
+            border-radius: 34px;
+            transition: .4s;
+        }
+        
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        input:checked + .theme-slider {
+            background-color: var(--accent-color);
+        }
+        
+        input:checked + .theme-slider:before {
+            transform: translateX(36px);
+        }
+        
+        .theme-slider i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+        }
+        
+        .fa-sun {
+            color: #ffd166;
+            left: 8px;
+        }
+        
+        .fa-moon {
+            color: #2d3047;
+            right: 8px;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .card p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .feature {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--shadow-color);
+            font-size: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        /* Theme icon button alternative */
+        .theme-icon-btn {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+        
+        .theme-icon-btn:hover {
+            transform: rotate(30deg);
+        }
+        
+        @media (max-width: 768px) {
+            .theme-toggle {
+                display: none;
+            }
+            
+            .theme-icon-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .theme-label {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="container">
+        <header>
+            <h1>Theme Switcher</h1>
+            <div class="theme-toggle-container">
+                <span class="theme-label">Dark Mode</span>
+                
+                <!-- Toggle Switch -->
+                <label class="theme-toggle">
+                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <span class="theme-slider">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </span>
+                </label>
+                
+                <!-- Icon Button (for mobile) -->
+                <button class="theme-icon-btn" id="theme-icon-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="content">
+                <div class="card">
+                    <h2>About This Demo</h2>
+                    <p>This page demonstrates a dark/light theme toggle button that switches the entire website appearance. The theme preference is saved in your browser's local storage, so it persists between visits.</p>
+                    <p>Try toggling the switch or button to see the smooth transition between themes. The interface includes both a toggle switch (for desktop) and a button (for mobile).</p>
+                </div>
+                
+                <div class="card">
+                    <h2>Theme Benefits</h2>
+                    <p><strong>Light Theme:</strong> Reduces eye strain in well-lit environments, improves readability for some users, and is the default for most websites.</p>
+                    <p><strong>Dark Theme:</strong> Saves battery on OLED screens, reduces eye strain in low-light conditions, and minimizes blue light exposure before sleep.</p>
+                    <p>Modern websites should offer both options to accommodate user preferences and accessibility needs.</p>
+                </div>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-palette"></i>
+                    <span>Custom Styling</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-save"></i>
+                    <span>Local Storage</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Responsive Design</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>Smooth Transitions</span>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Created with HTML, CSS, and JavaScript | Theme toggle demo</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const themeToggleCheckbox = document.getElementById('theme-toggle-checkbox');
+            const themeIconBtn = document.getElementById('theme-icon-btn');
+            const themeIcon = themeIconBtn.querySelector('i');
+            const body = document.body;
+            
+            // Check for saved theme preference or use preferred color scheme
+            const getPreferredTheme = () => {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    return savedTheme;
+                }
+                
+                // Check for system preference
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
+            
+            // Apply theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.add('dark-theme');
+                    body.classList.remove('light-theme');
+                    themeToggleCheckbox.checked = true;
+                    themeIcon.className = 'fas fa-sun';
+                    themeIconBtn.setAttribute('aria-label', 'Switch to light theme');
+                } else {
+                    body.classList.add('light-theme');
+                    body.classList.remove('dark-theme');
+                    themeToggleCheckbox.checked = false;
+                    themeIcon.className = 'fas fa-moon';
+                    themeIconBtn.setAttribute('aria-label', 'Switch to dark theme');
+                }
+                
+                // Save preference to localStorage
+                localStorage.setItem('theme', theme);
+            };
+            
+            // Initialize theme
+            const preferredTheme = getPreferredTheme();
+            applyTheme(preferredTheme);
+            
+            // Toggle theme function
+            const toggleTheme = () => {
+                const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(newTheme);
+            };
+            
+            // Event listeners
+            themeToggleCheckbox.addEventListener('change', toggleTheme);
+            themeIconBtn.addEventListener('click', toggleTheme);
+            
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // Only apply if user hasn't manually set a preference
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+            
+            // Add keyboard support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 't' || e.key === 'T') {
+                    toggleTheme();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
